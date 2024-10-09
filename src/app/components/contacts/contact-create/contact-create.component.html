@@ -5,7 +5,7 @@
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
       <div class="form-group m-2">
         <label>First Name</label>
-        <input formControlName="name" class="form-control" />
+        <input formControlName="firstname" class="form-control" />
         <div *ngIf="contactForm.get('firstname')?.invalid && contactForm.get('firstname')?.touched" class="text-danger">
           First Name is required.
         </div>
