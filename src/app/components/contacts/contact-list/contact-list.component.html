@@ -1,0 +1,34 @@
+<div class="container">
+  <div *ngIf="!isFlagged">
+    <button (click)="addContact()" class="btn btn-success btn-margin">New</button>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts">
+          <th>{{ contact.id }}</th>
+          <td>{{ contact.firstname }}</td>
+          <td>{{ contact.lastname }}</td>
+          <td>{{ contact.email }}</td>
+          <td>
+            <button (click)="editContact(contact)" class="btn btn-primary me-1">Edit</button>            
+          </td>
+          <td>
+            <button (click)="deleteContact(contact.id)" class="btn btn-danger me-1">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="isFlagged">
+    <app-contact-edit  *ngIf="selectedContact" [contact]="selectedContact"></app-contact-edit>
+  </div>
+</div>

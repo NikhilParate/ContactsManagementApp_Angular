@@ -1,0 +1,31 @@
+<div class="container">
+    <h2 class=" m-2">Add Contact</h2>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <div class="form-group m-2">
+        <label>First Name</label>
+        <input formControlName="name" class="form-control" />
+        <div *ngIf="contactForm.get('firstname')?.invalid && contactForm.get('firstname')?.touched" class="text-danger">
+          First Name is required.
+        </div>
+      </div>
+      <div class="form-group m-2">
+        <label>Last Name</label>
+        <input formControlName="lastname" class="form-control" />
+        <div *ngIf="contactForm.get('lastname')?.invalid && contactForm.get('lastname')?.touched" class="text-danger">
+          Last Name is required.
+        </div>
+      </div>
+      <div class="form-group m-2">
+        <label>Email</label>
+        <input formControlName="email" class="form-control" />
+        <div *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" class="text-danger">
+          Valid email is required.
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success m-1" [disabled]="contactForm.invalid">Add Contact</button>
+    </form>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
