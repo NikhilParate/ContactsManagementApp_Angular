@@ -9,6 +9,7 @@ import { ContactListComponent } from './components/contacts/contact-list/contact
 import { ContactCreateComponent } from './components/contacts/contact-create/contact-create.component';
 import { ContactEditComponent } from './components/contacts/contact-edit/contact-edit.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NotificationComponent } from './components/notification/notification.co
   imports: [
     AppRoutingModule,
     BrowserModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

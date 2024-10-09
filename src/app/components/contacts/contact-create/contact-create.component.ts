@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class ContactCreateComponent {
   contactForm: FormGroup;
+  errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, 
     private contactService: ContactService,
@@ -31,8 +32,23 @@ export class ContactCreateComponent {
       this.contactService.addContact(newContact);
       this.contactForm.reset();
       this.router.navigate(['/']); 
+      this.createItem();
     }
   }
+
+  createItem() {
+    const newItem = { name: 'New Item' }; // Replace with actual data
+    this.contactService.createItem(newItem).subscribe(
+      (response) => {
+        //this.items.push(response); // Add new item to the list
+        this.errorMessage = null; // Reset error message on success
+      },
+      (error) => {
+        this.errorMessage = error; // Set error message on failure
+      }
+    );
+  }
+
   showSuccess() {
     this.notificationService.addNotification({ message: 'Contact added successfully!', type: 'success' });
   }

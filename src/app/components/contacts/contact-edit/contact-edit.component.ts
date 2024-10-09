@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class ContactEditComponent {
   @Input() contact!: Contact;
   contactForm!: FormGroup;
+  errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private contactService: ContactService ,private notificationService: NotificationService) {
     
@@ -30,10 +31,25 @@ export class ContactEditComponent {
   onSubmit(): void {
     this.contactService.setFlag(false);
     this.showSuccess();
+    this.updateItem();
     /*if (this.contactForm.valid) {
       this.contactService.updateContact(this.contactForm.value);
     }*/
   }
+
+  updateItem() {
+    const newItem = { name: 'New Item' }; // Replace with actual data
+    this.contactService.updateItem(123, newItem).subscribe(
+      (response) => {
+        //this.items.push(response); // Add new item to the list
+        this.errorMessage = null; // Reset error message on success
+      },
+      (error) => {
+        this.errorMessage = error; // Set error message on failure
+      }
+    );
+  }
+
 
   showSuccess() {
     this.notificationService.addNotification({ message: 'Contact updated successfully!', type: 'success' });
