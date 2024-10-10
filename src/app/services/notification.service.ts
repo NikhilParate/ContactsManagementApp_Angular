@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface Notification {
   message: string;
-  type: 'success' | 'error' | 'info' | 'warning';
+  type: 'success' | 'error' | 'info' | 'warning' | 'danger' ;
 }
 
 @Injectable({

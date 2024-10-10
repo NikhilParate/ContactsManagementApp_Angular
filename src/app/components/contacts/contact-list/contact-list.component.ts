@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Contact } from 'src/app/models/contact.model';
 import { ContactService } from 'src/app/services/contact.service';
@@ -9,7 +9,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
 })
-export class ContactListComponent {
+export class ContactListComponent  implements OnInit {
   contacts: Contact[] = [];
   selectedContact!: Contact | null;
   isFlagged: boolean = false;
@@ -23,7 +23,6 @@ export class ContactListComponent {
   }
   
   ngOnInit(): void {
-    this.contacts = this.contactService.getContacts();
     this.getItems(); 
   }
 
@@ -31,29 +30,31 @@ export class ContactListComponent {
     this.contactService.getItems().subscribe(
       (response) => {
         this.items = response;
+        this.contacts = response;
         this.errorMessage = null; // Reset error message on success
       },
       (error) => {
         this.errorMessage = error; // Set error message on failure
+        this.showError("Oop's tere was something error..!");
+        console.log(error);
       }
     );
   }
 
   deleteContact(id: number): void {
-    if(confirm('are you sure you want to delete?')){
-      this.contactService.deleteContact(id);
-      this.contacts = this.contactService.getContacts();
-      this.showSuccess();
-      this.deleteItem(123);
+    if(confirm('are you sure you want to delete?')){      
+      this.deleteItem(id);
     }
   }
 
   deleteItem(id: number) {
     this.contactService.deleteItem(id).subscribe(
       () => {
-        this.errorMessage = null; // Reset error message on success
+        this.getItems();
+        this.showSuccess('Contact deleted successfully!');
       },
       (error) => {
+        this.showError("Record deleted successfully!");
         this.errorMessage = error; // Set error message on failure
       }
     );
@@ -69,12 +70,12 @@ export class ContactListComponent {
     this.router.navigate(['/create']); 
   }
 
-  showSuccess() {
-    this.notificationService.addNotification({ message: 'Contact deleted successfully!', type: 'success' });
+  showSuccess(msg: string) {
+    this.notificationService.addNotification({ message: msg, type: 'success' });
   }
 
-  showError() {
-    this.notificationService.addNotification({ message: 'Operation failed!', type: 'error' });
+  showError(msg: string) {
+    this.notificationService.addNotification({ message: msg, type: 'danger' });
   }
   
 }

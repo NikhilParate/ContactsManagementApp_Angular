@@ -8,22 +8,9 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ContactService {
-  //private contacts: Contact[] = [];
-  private contacts: Contact[] = [
-    {
-      "id": 1,
-      "firstname": "John",
-      "lastname": "Doe",
-      "email": "john.doe@example.com"
-    },
-    {
-      "id": 2,
-      "firstname": "Jane",
-      "lastname": "Smith",
-      "email": "jane.smith@example.com"
-    }
-  ];
-  private apiUrl = 'https://api.example.com/items';
+  private contacts: Contact[] = [];
+
+  private apiUrl = 'https://localhost:7047/api/Contacts';
   private currentId = 1;
   private flagSubject = new BehaviorSubject<boolean>(false);
   flag$ = this.flagSubject.asObservable();
@@ -34,9 +21,9 @@ export class ContactService {
     this.flagSubject.next(value);
   }  
 
-  getContacts(): Contact[] {
-    return this.contacts;
-  }
+  // getContacts(): Contact[] {
+  //   return this.contacts;
+  // }
 
   addContact(contact: Contact): void {
     contact.id = this.currentId++;

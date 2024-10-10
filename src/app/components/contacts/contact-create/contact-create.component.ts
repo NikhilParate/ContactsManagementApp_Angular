@@ -27,24 +27,23 @@ export class ContactCreateComponent {
 
   onSubmit(): void {
     if (this.contactForm.valid) {
-      this.showSuccess();
-      const newContact: Contact = this.contactForm.value;
-      this.contactService.addContact(newContact);
-      this.contactForm.reset();
-      this.router.navigate(['/']); 
-      this.createItem();
+      this.createItem(this.contactForm.value);
+    
     }
   }
 
-  createItem() {
-    const newItem = { name: 'New Item' }; // Replace with actual data
-    this.contactService.createItem(newItem).subscribe(
+  createItem(contact: Contact) {
+    contact.id = 0;
+    this.contactService.createItem(contact).subscribe(
       (response) => {
-        //this.items.push(response); // Add new item to the list
+        this.showSuccess();
+        this.contactForm.reset();
         this.errorMessage = null; // Reset error message on success
+        this.router.navigate(['/']); 
       },
       (error) => {
         this.errorMessage = error; // Set error message on failure
+        this.showError("Oop's tere was something error..!");
       }
     );
   }
@@ -53,8 +52,8 @@ export class ContactCreateComponent {
     this.notificationService.addNotification({ message: 'Contact added successfully!', type: 'success' });
   }
 
-  showError() {
-    this.notificationService.addNotification({ message: 'Operation failed!', type: 'error' });
+  showError(msg: string) {
+    this.notificationService.addNotification({ message: msg, type: 'error' });
   }
 
 }
